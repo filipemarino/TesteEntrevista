@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TesteEntrevista.Domain\TesteEntrevista.Domain.csproj" />
+    <ProjectReference Include="..\TesteEntrevista.Application\TesteEntrevista.Application.csproj" />
+    <ProjectReference Include="..\TesteEntrevista.EF\TesteEntrevista.EF.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
