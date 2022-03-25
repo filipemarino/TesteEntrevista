@@ -9,7 +9,7 @@ namespace TesteEntrevista.EF.Repositories
 {
     public class CaminhaoRepository : ICaminhaoRepository
     {
-        public Task ApagarCaminhaopAsync(int id)
+        public Task ApagarCaminhaoAsync(int id)
         {
             throw new NotImplementedException();
         }

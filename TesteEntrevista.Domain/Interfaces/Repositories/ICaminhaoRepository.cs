@@ -12,6 +12,6 @@ namespace TesteEntrevista.Domain.Interfaces.Repositories
         Task<Caminhao> RecuperarCaminhaoPorId(int id);
         Task<int> CriarCaminhaoAsync(Caminhao caminhao);
         Task AtualizarCaminhaoAsync(Caminhao caminhao);
-        Task ApagarCaminhaopAsync(int id);
+        Task ApagarCaminhaoAsync(int id);
     }
 }
