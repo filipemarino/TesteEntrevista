@@ -17,14 +17,20 @@ namespace TesteEntrevista.Controllers
          _context = context;
       }
 
-      // GET: Caminhoes
+      /// <summary>
+      /// Executa na pagina index
+      /// </summary>
+      /// <returns>Lista dos veiculos cadastrados</returns>
       public async Task<IActionResult> Index()
       {
         return View(await _context.Caminhao.Where(x => x.AnoFab == DateTime.Now.Year && x.AnoMod >= DateTime.Now.Year 
                                                                                      && (x.Modelo == "FM" || x.Modelo == "FH")).OrderBy(p => p.Placa).ToListAsync());
       }
-
-      // GET: Caminhoes/Details/5
+      /// <summary>
+      /// Executa quando vai verificar os detalhes do veiculo
+      /// </summary>
+      /// <param name="id"></param>
+      /// <returns></returns>
       public async Task<IActionResult> Details(int? id)
       {
          if (id == null) { return NotFound(); }                                                                            // Se não recebeu o ID retorna informação na tela
@@ -33,27 +39,30 @@ namespace TesteEntrevista.Controllers
 
          return View(caminhao);                                                                                            // Retorna os dados localizado para a view
       }
-
-      // GET: Caminhoes/Create
+      /// <summary>
+      /// Cria a view
+      /// </summary>
+      /// <returns></returns>
       public IActionResult Create()
       {
-         return View();
+         return View();                                                                                                    // Retorna a view
       }
-
-      // POST: Caminhoes/Create
-      // To protect from overposting attacks, enable the specific properties you want to bind to.
-      // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      /// <summary>
+      /// Adicionar um novo registro
+      /// </summary>
+      /// <param name="caminhao">Classe com os dados do caminhão</param>
+      /// <returns>View com o caminhão cadastrado</returns>
       [HttpPost]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Create([Bind("Id,Placa,Modelo,AnoFab,AnoMod")] Caminhao caminhao)
       {
-         if (ModelState.IsValid)
+         if (ModelState.IsValid)                                                                                           // O model esta valido
          {
-            _context.Add(caminhao);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            _context.Add(caminhao);                                                                                        // Adciona o registro ao context
+            await _context.SaveChangesAsync();                                                                             // Salva as alterações
+            return RedirectToAction(nameof(Index));                                                                        // Retona a view de index
          }
-         return View(caminhao);
+         return View(caminhao);                                                                                            // Retona a view dos registro cadastrado
       }
 
       // GET: Caminhoes/Edit/5
@@ -65,40 +74,36 @@ namespace TesteEntrevista.Controllers
 
          return View(caminhao);                                                                                            // Retorna os dados localizado para a view
       }
-
-      // POST: Caminhoes/Edit/5
-      // To protect from overposting attacks, enable the specific properties you want to bind to.
-      // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      /// <summary>
+      /// Atualiza o registro
+      /// </summary>
+      /// <param name="id">Id do registro</param>
+      /// <param name="caminhao">Registro do caminhão</param>
+      /// <returns></returns>
       [HttpPost]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Edit(int id, [Bind("Id,Placa,Modelo,AnoFab,AnoMod")] Caminhao caminhao)
       {
-         if (id != caminhao.Id)
-         {
-            return NotFound();
-         }
-
-         if (ModelState.IsValid)
+         if (id != caminhao.Id)                                                                                            // Verifica se o Id é diferente
+            return NotFound();                                                                                             // Retorna a tela
+         
+         if (ModelState.IsValid)                                                                                           // O model esta valido
          {
             try
             {
-               _context.Update(caminhao);
-               await _context.SaveChangesAsync();
+               _context.Update(caminhao);                                                                                  // Atualiza o registro
+               await _context.SaveChangesAsync();                                                                          // Salva as alterações
             }
             catch (DbUpdateConcurrencyException)
             {
-               if (!CaminhaoExists(caminhao.Id))
-               {
+               if (!CaminhaoExists(caminhao.Id))                                                                          
                   return NotFound();
-               }
                else
-               {
-                  throw;
-               }
+                  throw;                                                                                                   // Gera um erro
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));                                                                        // Retorna a view
          }
-         return View(caminhao);
+         return View(caminhao);                                                                                            // Retorna para a view com os registros
       }
 
       // GET: Caminhoes/Delete/5
@@ -110,21 +115,24 @@ namespace TesteEntrevista.Controllers
 
          return View(caminhao);                                                                                            // Retorna os dados localizado para a view
       }
-
-      // POST: Caminhoes/Delete/5
+      /// <summary>
+      /// Executa na hora de apagar um resgistro
+      /// </summary>
+      /// <param name="id">Id do veiculo a ser deletado</param>
+      /// <returns></returns>
       [HttpPost, ActionName("Delete")]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> DeleteConfirmed(int id)
       {
-         var caminhao = await _context.Caminhao.FindAsync(id);
-         _context.Caminhao.Remove(caminhao);
-         await _context.SaveChangesAsync();
-         return RedirectToAction(nameof(Index));
+         var caminhao = await _context.Caminhao.FindAsync(id);                                                             // Localiza o registro atraves do ID
+         _context.Caminhao.Remove(caminhao);                                                                               // Remove o registro atraves do Id 
+         await _context.SaveChangesAsync();                                                                                // Salva as alterações
+         return RedirectToAction(nameof(Index));                                                                           // Retorna a view
       }
 
       private bool CaminhaoExists(int id)
       {
-         return _context.Caminhao.Any(e => e.Id == id);
+         return _context.Caminhao.Any(e => e.Id == id);                                                                    // Verifica se existe o registro
       }
    }
 }
