@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using TesteEntrevista.IoC;
 
 namespace TesteEntrevista.WebAPI
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,6 +31,10 @@ namespace TesteEntrevista.WebAPI
         {
 
             services.AddControllers();
+            services.AddConfigEF();
+            services.AddConfigServices();
+            services.AddConfigRepositories();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TesteEntrevista.WebAPI", Version = "v1" });
